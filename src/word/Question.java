@@ -3,15 +3,28 @@ package word;
 import java.io.Serializable;
 
 public class Question implements Serializable {
-    String text, answer;
-    int id;
+    String text, photo;
+    int id, answer;
 
-    public Question(){}
+    public Question(){
 
-    public Question(String text, String answer, int id) {
-        this.text = text;
-        this.answer = answer;
+    }
+
+    public Question(int id, String text, String photo, int answer){
         this.id = id;
+        this.text = text;
+        this.photo = photo;
+        this.answer = answer;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "text='" + text + '\'' +
+                ", photo='" + photo + '\'' +
+                ", id=" + id +
+                ", answer=" + answer +
+                '}';
     }
 
     public String getText() {
@@ -22,11 +35,11 @@ public class Question implements Serializable {
         this.text = text;
     }
 
-    public String getAnswer() {
+    public int getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(int answer) {
         this.answer = answer;
     }
 

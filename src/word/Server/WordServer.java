@@ -1,17 +1,17 @@
-package word;
+package word.Server;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerQuestion {
+public class WordServer {
     public static void main(String args[]) {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(5432);
+            serverSocket = new ServerSocket(8080);
             while (true) {
                 Socket socket = serverSocket.accept();
-                (new ServerQuestionThread(socket)).start();
+                (new WordServerThread(socket)).start();
             }
         } catch (Exception e) {
             System.err.println(e);
