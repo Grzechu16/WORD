@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import javafx.scene.image.ImageView ;
+import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +27,10 @@ public class Controller {
      * Main window layout
      */
     @FXML
+    public Pane paneMain;
+    @FXML
+    public Pane paneQuestion;
+    @FXML
     public TextField textfieldPesel;
     @FXML
     public TextField textfieldName;
@@ -36,8 +40,7 @@ public class Controller {
     public Button buttonStart;
     @FXML
     public Button buttonMainExit;
-    @FXML
-    public Pane mainPane;
+
 
     /**
      * Question window layout
@@ -45,9 +48,9 @@ public class Controller {
     @FXML
     public TextArea textAreaQuestion;
     @FXML
-    public Button buttonA;
+    public Button aButton;
     @FXML
-    public Button buttonB;
+    public Button bButton;
     @FXML
     public Button buttonNext;
     @FXML
@@ -71,14 +74,20 @@ public class Controller {
     private Stage primaryStage;
     Socket socket;
     List<Question> questions = new ArrayList<>();
+    public int number = 0;
 
     public Controller() {
     }
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
+        paneMain.setVisible(true);
+        paneQuestion.setVisible(false);
+        getQuestions();
         buttonStart.setOnAction(new ButtonEventHandler());
         buttonMainExit.setOnAction(new ButtonEventHandler());
+        buttonNext.setOnAction(new ButtonEventHandler());
+        buttonQuestionExit.setOnAction(new ButtonEventHandler());
     }
 
 
@@ -92,7 +101,7 @@ public class Controller {
     }
 
     public void start() throws IOException, ClassNotFoundException {
-    getQuestions();
+
 
     }
 
@@ -115,15 +124,19 @@ public class Controller {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                    try {
-                        changeScene(buttonStart, "question");
-                        loadQuestions();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    loadQuestions(number);
+                    number++;
                 }
             }
-            if (source == buttonMainExit) {
+            if (source == buttonNext) {
+                if (number >= 10) {
+                    paneQuestion.setVisible(false);
+                } else {
+                    loadQuestions(number);
+                    number++;
+                }
+            }
+            if (source == buttonMainExit || source == buttonQuestionExit || source == buttonSummaryExit) {
                 closeScene(buttonMainExit);
             }
         }
@@ -131,24 +144,29 @@ public class Controller {
 
     public void getQuestions() {
 
+        int id, answer;
+        String text, photo;
+
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection = null;
+            Connection connection;
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/WORD", "postgres", "postgres");
             Statement statement = connection.createStatement();
 
-            ResultSet rset = statement.executeQuery("SELECT * FROM questions ORDER BY RANDOM() LIMIT 5");
+            ResultSet rset = statement.executeQuery("SELECT * FROM questions ORDER BY RANDOM() LIMIT 10");
 
             while (rset.next()) {
-                Question question = new Question();
-                question.id = rset.getInt("id");
-                question.answer = rset.getInt("answer");
-                question.text = rset.getString("text");
-                question.photo = rset.getString("photo");
 
-                questions.add(question);
-                System.out.println(question);
+                id = rset.getInt("id");
+                answer = rset.getInt("answer");
+                text = rset.getString("text");
+                photo = rset.getString("photo");
+
+                questions.add(new Question(id, text, photo, answer));
+
+
             }
+            System.out.println(questions);
 
 
         } catch (SQLException ex) {
@@ -170,32 +188,21 @@ public class Controller {
         preparedStatement.executeUpdate();
     }
 
-    public void loadQuestions() {
-        String questionText = questions.get(0).getText();
+    public void loadQuestions(int number) {
+        paneMain.setVisible(false);
+        paneQuestion.setVisible(true);
+        String questionText = questions.get(number).getText();
         textAreaQuestion.setText(questionText);
-        File file = new File("https://drive.google.com/open?id=18G61plcGfjEPMV81DxvsSMSRsR7b3708");
-        Image image = new Image(file.toURI().toString());
-        imageViewPicture.setImage(image);
+
+        imageViewPicture = new ImageView(new Image(getClass().getResourceAsStream("Images/" + questions.get(number).getId() + ".png")));
+        imageViewPicture.setFitWidth(241);
+        imageViewPicture.setFitHeight(205);
+        imageViewPicture.setX(326);
+        imageViewPicture.setY(26);
+        paneQuestion.getChildren().add(imageViewPicture);
     }
 
-    public void changeScene(Button from, String to) throws IOException {
-        Stage stage1 = (Stage) from.getScene().getWindow();
-        stage1.close();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-
-        if (to == "main") {
-            fxmlLoader = new FXMLLoader(getClass().getResource("styles/questionWindow.fxml"));
-        } else if (to == "question") {
-            fxmlLoader = new FXMLLoader(getClass().getResource("styles/questionWindow.fxml"));
-        } else if (to == "summary") {
-            fxmlLoader = new FXMLLoader(getClass().getResource("styles/summaryWindow.fxml"));
-        }
-
-        Parent root1 = fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setTitle("WORD Kraków - Egzamin na prawo jazdy 2018");
-        stage.setScene(new Scene(root1, 600, 400));
-        stage.show();
+    public void checkAnswer(){
 
     }
 
