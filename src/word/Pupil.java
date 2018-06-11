@@ -3,11 +3,20 @@ package word;
 public class Pupil {
     long pesel;
     String name, surname;
+    int score;
 
     public Pupil(long pesel, String name, String surname) {
         this.pesel = pesel;
         this.name = name;
         this.surname = surname;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public long getPesel() {

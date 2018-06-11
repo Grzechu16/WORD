@@ -31,6 +31,8 @@ public class Controller {
     @FXML
     public Pane paneQuestion;
     @FXML
+    public Pane paneSummary;
+    @FXML
     public TextField textfieldPesel;
     @FXML
     public TextField textfieldName;
@@ -48,9 +50,9 @@ public class Controller {
     @FXML
     public TextArea textAreaQuestion;
     @FXML
-    public Button aButton;
+    public Button buttonA;
     @FXML
-    public Button bButton;
+    public Button buttonB;
     @FXML
     public Button buttonNext;
     @FXML
@@ -66,7 +68,9 @@ public class Controller {
      * Summary window layout
      */
     @FXML
-    public Text textScore, textPassed;
+    public Text textScore;
+    @FXML
+    public Text textPassed;
     @FXML
     public Button buttonSummaryExit;
 
@@ -74,7 +78,10 @@ public class Controller {
     private Stage primaryStage;
     Socket socket;
     List<Question> questions = new ArrayList<>();
+    List<Pupil> pupils = new ArrayList<>();
     public int number = 0;
+    public int score = 0;
+
 
     public Controller() {
     }
@@ -88,6 +95,10 @@ public class Controller {
         buttonMainExit.setOnAction(new ButtonEventHandler());
         buttonNext.setOnAction(new ButtonEventHandler());
         buttonQuestionExit.setOnAction(new ButtonEventHandler());
+        buttonA.setOnAction(new ButtonEventHandler());
+        buttonB.setOnAction(new ButtonEventHandler());
+        radioA.setOnAction(new ButtonEventHandler());
+        radioB.setOnAction(new ButtonEventHandler());
     }
 
 
@@ -124,17 +135,27 @@ public class Controller {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                    loadQuestions(number);
-                    number++;
+                    loadFirstQuestions();
                 }
             }
             if (source == buttonNext) {
+                checkAnswer(number);
+                number++;
                 if (number >= 10) {
                     paneQuestion.setVisible(false);
+                    paneSummary.setVisible(true);
+                    printSummary(score);
                 } else {
                     loadQuestions(number);
-                    number++;
                 }
+            }
+            if (source == buttonA) {
+                radioB.setSelected(false);
+                radioA.setSelected(true);
+            }
+            if (source == buttonB) {
+                radioA.setSelected(false);
+                radioB.setSelected(true);
             }
             if (source == buttonMainExit || source == buttonQuestionExit || source == buttonSummaryExit) {
                 closeScene(buttonMainExit);
@@ -178,6 +199,7 @@ public class Controller {
 
     public void addPupil(long pesel, String name, String surname) throws SQLException, ClassNotFoundException {
         Pupil pupil = new Pupil(pesel, name, surname);
+        pupils.add(pupil);
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection;
         connection = DriverManager.getConnection("jdbc:mysql://localhost/" + "word" + "?user=root");
@@ -188,13 +210,13 @@ public class Controller {
         preparedStatement.executeUpdate();
     }
 
-    public void loadQuestions(int number) {
+    public void loadFirstQuestions() {
         paneMain.setVisible(false);
         paneQuestion.setVisible(true);
-        String questionText = questions.get(number).getText();
+        String questionText = questions.get(0).getText();
         textAreaQuestion.setText(questionText);
 
-        imageViewPicture = new ImageView(new Image(getClass().getResourceAsStream("Images/" + questions.get(number).getId() + ".png")));
+        imageViewPicture = new ImageView(new Image(getClass().getResourceAsStream("Images/" + questions.get(0).getId() + ".png")));
         imageViewPicture.setFitWidth(241);
         imageViewPicture.setFitHeight(205);
         imageViewPicture.setX(326);
@@ -202,9 +224,34 @@ public class Controller {
         paneQuestion.getChildren().add(imageViewPicture);
     }
 
-    public void checkAnswer(){
-
+    public void loadQuestions(int number) {
+        String questionText = questions.get(number).getText();
+        textAreaQuestion.setText(questionText);
+        imageViewPicture.setImage(new Image(getClass().getResourceAsStream("Images/" + questions.get(number).getId() + ".png")));
     }
+
+    public void checkAnswer(int number) {
+        int answer = 0;
+
+        if (radioA.isSelected()) {
+            answer = 1;
+        } else if (radioB.isSelected()) {
+            answer = 2;
+        }
+        if (questions.get(number).getAnswer() == answer) {
+            score++;
+        }
+            }
+
+            public void printSummary(int score){
+            int percent = (100*score)/10;
+                textScore.setText(score+" / 10");
+                if(percent>60){
+                    textPassed.setText("Test zaliczony!");
+                } else{
+                    textPassed.setText("Test nie został zaliczony");
+                }
+            }
 
     public void closeScene(Button button) {
         Stage stage = (Stage) button.getScene().getWindow();
