@@ -5,14 +5,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -80,7 +86,7 @@ public class Controller {
     List<Question> questions = new ArrayList<>();
     List<Pupil> pupils = new ArrayList<>();
     public int number = 0;
-    public int score = 0;
+    UserResult userResult = new UserResult();
 
 
     public Controller() {
@@ -88,6 +94,7 @@ public class Controller {
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
+        userResult.setScore(0);
         paneMain.setVisible(true);
         paneQuestion.setVisible(false);
         getQuestions();
@@ -95,6 +102,7 @@ public class Controller {
         buttonMainExit.setOnAction(new ButtonEventHandler());
         buttonNext.setOnAction(new ButtonEventHandler());
         buttonQuestionExit.setOnAction(new ButtonEventHandler());
+        buttonSummaryExit.setOnAction(new ButtonEventHandler());
         buttonA.setOnAction(new ButtonEventHandler());
         buttonB.setOnAction(new ButtonEventHandler());
         radioA.setOnAction(new ButtonEventHandler());
@@ -125,9 +133,10 @@ public class Controller {
                 if (textfieldPesel.getText().trim().isEmpty() || textfieldName.getText().trim().isEmpty() || textfieldSurname.getText().trim().isEmpty()) {
                     showAlert("Proszę wypełnić wymagane pola");
                 } else {
-                    int pesel = Integer.parseInt(textfieldPesel.getText());
+                    long pesel = Long.parseLong(textfieldPesel.getText());
                     String name = textfieldName.getText();
                     String surname = textfieldSurname.getText();
+                    userResult.setPesel(pesel);
                     try {
                         addPupil(pesel, name, surname);
                     } catch (SQLException e) {
@@ -144,7 +153,14 @@ public class Controller {
                 if (number >= 10) {
                     paneQuestion.setVisible(false);
                     paneSummary.setVisible(true);
-                    printSummary(score);
+                    try {
+                        addScore(userResult.getScore(),userResult.getPesel());
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    printSummary(userResult.getScore());
                 } else {
                     loadQuestions(number);
                 }
@@ -197,6 +213,14 @@ public class Controller {
 
     }
 
+    public void addScore(int score, long pesel) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection;
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/" + "word" + "?user=root");
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE pupil set score = " + score + " where pesel = " + pesel);
+        preparedStatement.executeUpdate();
+    }
+
     public void addPupil(long pesel, String name, String surname) throws SQLException, ClassNotFoundException {
         Pupil pupil = new Pupil(pesel, name, surname);
         pupils.add(pupil);
@@ -239,19 +263,21 @@ public class Controller {
             answer = 2;
         }
         if (questions.get(number).getAnswer() == answer) {
-            score++;
+            userResult.score++;
         }
-            }
+    }
 
-            public void printSummary(int score){
-            int percent = (100*score)/10;
-                textScore.setText(score+" / 10");
-                if(percent>60){
-                    textPassed.setText("Test zaliczony!");
-                } else{
-                    textPassed.setText("Test nie został zaliczony");
-                }
-            }
+    public void printSummary(int score) {
+        int percent = (100 * score) / 10;
+        textScore.setText(score + " / 10");
+        if (percent > 60) {
+            textPassed.setText("Test zaliczony!");
+            textPassed.setFill(Color.GREEN);
+        } else {
+            textPassed.setText("Test nie został zaliczony");
+            textPassed.setFill(Color.RED);
+        }
+    }
 
     public void closeScene(Button button) {
         Stage stage = (Stage) button.getScene().getWindow();
