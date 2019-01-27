@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="changing java version to 1.8">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,32 +66,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/word/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/word/styles/mainWindow.fxml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/word/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+            <state relative-caret-position="229">
+              <caret line="40" column="9" lean-forward="true" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;field#textAreaQuestion#0;class#Controller#0" />
@@ -98,6 +79,15 @@
                 <element signature="method#printSummary#0;class#Controller#0" />
                 <element signature="method#closeScene#0;class#Controller#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -204,6 +194,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -223,6 +218,7 @@
         <option value="$PROJECT_DIR$/src/word/styles/mainWindow.fxml" />
         <option value="$PROJECT_DIR$/src/word/UserResult.java" />
         <option value="$PROJECT_DIR$/src/word/Controller.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -428,12 +424,20 @@
       <workItem from="1528661145843" duration="5046000" />
       <workItem from="1528747998073" duration="5053000" />
       <workItem from="1528922106450" duration="1880000" />
-      <workItem from="1548621804362" duration="53000" />
+      <workItem from="1548621804362" duration="583000" />
     </task>
+    <task id="LOCAL-00001" summary="changing java version to 1.8">
+      <created>1548621967495</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1548621967495</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62021000" />
+    <option name="totallyTimeSpent" value="62551000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -447,7 +451,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.22348994" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.22348994" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -458,7 +462,7 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32928476" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2672065" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26628897" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32388663" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -469,8 +473,8 @@
       <window_info anchor="bottom" id="Event Log" order="10" weight="0.32928476" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32928476" />
       <window_info anchor="bottom" id="Problems" order="12" />
-      <window_info anchor="bottom" id="Version Control" order="13" visible="true" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="14" weight="0.20782726" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="13" visible="true" weight="0.5609065" />
+      <window_info anchor="bottom" id="Terminal" order="14" weight="0.20679887" />
       <window_info anchor="right" id="Maven" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -490,14 +494,14 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <MESSAGE value="changing java version to 1.8" />
+    <option name="LAST_COMMIT_MESSAGE" value="changing java version to 1.8" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://E:/Java/mysql-connector-java-5.1.18.jar!/com/mysql/jdbc/StatementImpl.class" />
-    <entry file="jar://E:/Java/mysql-connector-java-5.1.18.jar!/com/mysql/jdbc/ConnectionImpl.class" />
     <entry file="jar://E:/Java/mysql-connector-java-5.1.18.jar!/com/mysql/jdbc/PreparedStatement.class" />
     <entry file="jar://E:/Java/mysql-connector-java-5.1.18.jar!/com/mysql/jdbc/StringUtils.class" />
     <entry file="jar://E:/Java/mysql-connector-java-5.1.18.jar!/com/mysql/jdbc/NonRegisteringDriver.class" />
@@ -617,8 +621,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/word/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+        <state relative-caret-position="229">
+          <caret line="40" column="9" lean-forward="true" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;field#textAreaQuestion#0;class#Controller#0" />
@@ -628,6 +632,16 @@
             <element signature="method#printSummary#0;class#Controller#0" />
             <element signature="method#closeScene#0;class#Controller#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -688,6 +702,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
