@@ -130,6 +130,10 @@ public class Controller {
 
         @Override
         public void handle(ActionEvent event) {
+            if(event == null){
+                throw new IllegalArgumentException("EventHandler is broken, because it send nulls");
+            }
+
             Object source = event.getSource();
             if (source == buttonStart) {
                 if (textfieldPesel.getText().trim().isEmpty() || textfieldName.getText().trim().isEmpty() || textfieldSurname.getText().trim().isEmpty()) {
@@ -227,6 +231,13 @@ public class Controller {
 
     public void addPupil(long pesel, String name, String surname) throws SQLException, ClassNotFoundException {
         assert pesel != 0;
+        if(name == null){
+            throw new IllegalArgumentException("You cannot add Pupil without name");
+        }
+
+        if(surname == null){
+            throw new IllegalArgumentException("You cannot add Pupil without surname");
+        }
         Pupil pupil = new Pupil(pesel, name, surname);
         pupils.add(pupil);
         Class.forName("com.mysql.jdbc.Driver");

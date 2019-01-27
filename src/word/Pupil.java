@@ -6,6 +6,18 @@ public class Pupil {
     int score;
 
     public Pupil(long pesel, String name, String surname) {
+        if(name == null){
+            throw new IllegalArgumentException("You cannot create Pupil without name");
+        }
+
+        if(surname == null){
+            throw new IllegalArgumentException("You cannot create Pupil without surname");
+        }
+
+        if(pesel == 0){
+            throw new IllegalArgumentException("You cannot create Pupil without pesel");
+        }
+
         this.pesel = pesel;
         this.name = name;
         this.surname = surname;
