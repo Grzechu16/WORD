@@ -1,5 +1,6 @@
 package word;
 
+import com.sun.deploy.util.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -111,6 +112,7 @@ public class Controller {
 
 
     public void showAlert(String text) {
+        assert text != null;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Uwaga!");
         alert.setHeaderText(null);
@@ -214,6 +216,8 @@ public class Controller {
     }
 
     public void addScore(int score, long pesel) throws ClassNotFoundException, SQLException {
+        assert score != 0;
+        assert pesel != 0;
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection;
         connection = DriverManager.getConnection("jdbc:mysql://localhost/" + "word" + "?user=root");
@@ -222,6 +226,7 @@ public class Controller {
     }
 
     public void addPupil(long pesel, String name, String surname) throws SQLException, ClassNotFoundException {
+        assert pesel != 0;
         Pupil pupil = new Pupil(pesel, name, surname);
         pupils.add(pupil);
         Class.forName("com.mysql.jdbc.Driver");
@@ -249,6 +254,7 @@ public class Controller {
     }
 
     public void loadQuestions(int number) {
+        assert number != 0;
         String questionText = questions.get(number).getText();
         textAreaQuestion.setText(questionText);
         imageViewPicture.setImage(new Image(getClass().getResourceAsStream("Images/" + questions.get(number).getId() + ".png")));
